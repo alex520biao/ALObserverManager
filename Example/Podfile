@@ -1,8 +1,7 @@
-source 'https://git.xiaojukeji.com/one-ios/Specs.git'
-source 'https://git.xiaojukeji.com/ios/cocoapods-specs.git'
+source 'https://github.com/CocoaPods/Specs.git'
 
 # We don't use Swift internally. Disable this option.
-#use_frameworks!
+use_frameworks!
 
 # Use local pod code if available.
 def local_pod(name, *args)
@@ -29,13 +28,13 @@ target 'ALObserverManager_Example', :exclusive => true do
   # Add Example specific dependencies here...
 
   pod "ALObserverManager", :path => "../"
+  #local_pod "ALObserverManager", :path => "../"
 end
 
 target 'ALObserverManager_Tests', :exclusive => true do
   # Add Tests specific dependencies here...
 
   pod "ALObserverManager", :path => "../"
-
   pod 'Specta'
   pod 'Expecta'
   pod 'FBSnapshotTestCase'

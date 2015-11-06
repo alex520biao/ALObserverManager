@@ -1,16 +1,16 @@
 //
-//  ObserverManager.m
+//  ALObserverManager.m
 //  Pods
 //
 //  Created by liubiao on 15/11/2.
 //
 //
 
-#import "ObserverManager.h"
+#import "ALObserverManager.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
-#import "ObserverItem.h"
+#import "ALObserverItem.h"
 
-@interface ObserverManager()
+@interface ALObserverManager()
 
 /*!
  *  @brief  监听项集合
@@ -19,7 +19,7 @@
 
 @end
 
-@implementation ObserverManager
+@implementation ALObserverManager
 
 - (void)dealloc {
     _observerItemDict = nil;
@@ -31,7 +31,7 @@
 - (void)sendMessage:(id)msg distribute:(NSString*)distributeIdentifier{
     [self.observerItemDict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL * stop) {
         NSDictionary *dict = obj;
-        ObserverItem *item = (ObserverItem*)[dict objectForKey:distributeIdentifier];
+        ALObserverItem *item = (ALObserverItem*)[dict objectForKey:distributeIdentifier];
         if (item && item.block) {
             item.block(msg,item.distributeIdentifier);
         }
@@ -41,7 +41,7 @@
 #pragma mark - observer
 - (void)addObserver:(id)observer
          distribute:(NSString*)distributeIdentifier
-      responseBlock:(ObserverDistributeBlock)responseBlock{
+      responseBlock:(ALObserverDistributeBlock)responseBlock{
 
     //add observer
     NSString *observerAddress = [NSString stringWithFormat:@"%p",observer];
@@ -74,9 +74,9 @@
 #pragma mark - internal method
 - (void)addObserverWithAddress:(NSString *)observer_address
                     distribute:(NSString*)distributeIdentifier
-                 responseBlock:(ObserverDistributeBlock)responseBlock {
+                 responseBlock:(ALObserverDistributeBlock)responseBlock {
     if (observer_address && observer_address && responseBlock) {
-        ObserverItem *item = [[ObserverItem alloc] init];
+        ALObserverItem *item = [[ALObserverItem alloc] init];
         item.distributeIdentifier = distributeIdentifier;
         item.observerAddress      = observer_address;
         item.block                = responseBlock;
@@ -90,14 +90,8 @@
                 observerDict = [self.observerItemDict objectForKey:item.observerAddress];
             }
             
-            //获取observer_address对应的项目
-            NSMutableDictionary *identifierDict = [observerDict objectForKey:item.distributeIdentifier];
-            if (!identifierDict) {
-                [observerDict setObject:item forKey:item.distributeIdentifier];
-            }
-            
             //存放数据
-            [identifierDict setObject:item forKey:item.distributeIdentifier];
+            [observerDict setObject:item forKey:item.distributeIdentifier];
         }
     }
 }

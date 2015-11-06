@@ -43,7 +43,7 @@ Pod::Spec.new do |s|
   # s.dependency 'AFNetworking', '~> 2.5.4'
   # s.dependency 'JSONModel', '~> 1.1.0'
   # s.dependency 'libextobjc', '~> 0.4.1'
-    s.dependency 'ReactiveCocoa', '~> 2.5.0'
+    s.dependency 'ReactiveCocoa'
   # s.dependency 'ReactiveViewModel', '~> 0.3.0'
 
 end

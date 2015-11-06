@@ -7,12 +7,20 @@
 //
 
 #import "ALAppDelegate.h"
+#import "ALDataStore.h"
 
 @implementation ALAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-    // Override point for customization after application launch.
+{    
+    //ALAppDelegate向ALDataStore注册监听消息
+    [[ALDataStore sharedInstance] addObserver:self
+                                         type:ALDataStoreMsgType_A
+                                responseBlock:^(id msg, NSString *distributeIdentifier) {
+                                    NSString *message = (NSString*)msg;
+                                    NSLog(@"接收消息: %@",message);
+                                }];
+
     return YES;
 }
 							

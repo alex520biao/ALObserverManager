@@ -1,5 +1,5 @@
 //
-//  ObserverManager.h
+//  ALObserverManager.h
 //  Pods
 //
 //  Created by liubiao on 15/11/2.
@@ -7,12 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ObserverItem.h"
+#import "ALObserverItem.h"
 
 /*!
  *  @brief  监听分发管理器
  */
-@interface ObserverManager : NSObject
+@interface ALObserverManager : NSObject
 
 
 #pragma mark - sendMessage
@@ -32,7 +32,7 @@
  */
 - (void)addObserver:(id)observer
          distribute:(NSString*)distributeIdentifier
-      responseBlock:(ObserverDistributeBlock)responseBlock;
+      responseBlock:(ALObserverDistributeBlock)responseBlock;
 
 /*!
  *  @brief  移除监听者所属的所有监听item
