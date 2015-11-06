@@ -15,18 +15,6 @@
 
 介绍主要类的功能职责，例如：
 
-``` objective-c
-AFNetworkReachabilityManager：监听网络状态变化
-
-[[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
-
-	NSLog(@"Reachability: %@", AFStringFromNetworkReachabilityStatus(status));
-
-}];
-
-[[AFNetworkReachabilityManager sharedManager] startMonitoring];
-```
-
 
 ### 注意事项(可选)
 
@@ -50,4 +38,4 @@ alex520biao <alex520biao@163.com>
 
 ## 版权声明
 
-ALObserverManager 是滴滴内部项目，默认不对外开源。
+ALObserverManager开源项目。
