@@ -29,7 +29,7 @@
  *  @brief  通过distributeIdentifier发送消息,所有注册过distributeIdentifier的监听者都会收到消息
  */
 - (void)sendMessage:(id)msg distribute:(NSString*)distributeIdentifier{
-    [self.observerItemDict enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+    [self.observerItemDict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL * stop) {
         NSDictionary *dict = obj;
         ObserverItem *item = (ObserverItem*)[dict objectForKey:distributeIdentifier];
         if (item && item.block) {
