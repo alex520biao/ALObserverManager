@@ -15,7 +15,7 @@
  *
  *  @return
  */
-typedef  void(^ALObserverDistributeBlock)(id msg,NSString *distributeIdentifier);
+typedef  void(^ALObserverDistributeBlock)(id sender,id msg);
 
 @interface ALObserverItem : NSObject
 

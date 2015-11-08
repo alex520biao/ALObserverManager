@@ -26,14 +26,14 @@
     //ALViewController向ALDataStore注册监听消息
     [[ALDataStore sharedInstance] addObserver:self
                                          type:ALDataStoreMsgType_A
-                                responseBlock:^(id msg, NSString *distributeIdentifier) {
+                                responseBlock:^(id sender,id msg) {
                                     NSString *message = (NSString*)msg;
                                     NSLog(@"接收消息: %@",message);
                                 }];
     
     [[ALDataStore sharedInstance] addObserver:self
                                          type:ALDataStoreMsgType_B
-                                responseBlock:^(id msg, NSString *distributeIdentifier) {
+                                responseBlock:^(id sender,id msg) {
                                     NSString *message = (NSString*)msg;
                                     NSLog(@"接收消息: %@",message);
                                 }];

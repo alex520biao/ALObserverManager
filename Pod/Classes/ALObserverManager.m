@@ -32,10 +32,12 @@
     [self.observerItemDict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL * stop) {
         NSDictionary *dict = obj;
         ALObserverItem *item = (ALObserverItem*)[dict objectForKey:distributeIdentifier];
+        //使用block回调
         if (item && item.block) {
-            item.block(msg,item.distributeIdentifier);
+            item.block(sender,msg);
         }
         
+        //使用SEL回调
         if(item && item.selStr){
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
