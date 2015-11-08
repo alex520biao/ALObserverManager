@@ -47,4 +47,9 @@ typedef NS_ENUM(NSInteger, ALDataStoreMsgType) {
 
 - (void)sendMessage:(id)msg type:(ALDataStoreMsgType)type;
 
+#pragma mark - test
+-(void)testMessageType_A;
+-(void)testMessageType_B;
+-(void)testMessageType_C;
+
 @end

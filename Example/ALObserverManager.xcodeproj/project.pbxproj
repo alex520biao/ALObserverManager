@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1CD0C059536551796D0B2E19 /* Pods_ALObserverManager_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB066B3BEC0A996683DF560 /* Pods_ALObserverManager_Tests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		1CD0C059536551796D0B2E19 /* Pods_ALObserverManager_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB066B3BEC0A996683DF560 /* Pods_ALObserverManager_Tests.framework */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -22,8 +22,9 @@
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
-		D95623421BEC6AC20036828D /* ALDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = D95623411BEC6AC20036828D /* ALDataStore.m */; settings = {ASSET_TAGS = (); }; };
-		F1A35799B594EBDBCDBB0E49 /* Pods_ALObserverManager_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3B3A63AD0055761B797AB75 /* Pods_ALObserverManager_Example.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D91BBB131BEF3F2800A6EDDB /* ALNewStore.m in Sources */ = {isa = PBXBuildFile; fileRef = D91BBB121BEF3F2800A6EDDB /* ALNewStore.m */; };
+		D95623421BEC6AC20036828D /* ALDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = D95623411BEC6AC20036828D /* ALDataStore.m */; };
+		F1A35799B594EBDBCDBB0E49 /* Pods_ALObserverManager_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3B3A63AD0055761B797AB75 /* Pods_ALObserverManager_Example.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,9 @@
 		A146D29ABDD4FC7FF57900C8 /* Pods-ALObserverManager_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ALObserverManager_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ALObserverManager_Example/Pods-ALObserverManager_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		A3B3A63AD0055761B797AB75 /* Pods_ALObserverManager_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ALObserverManager_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C28DBB9702F126686F93FB37 /* Pods-ALObserverManager_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ALObserverManager_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ALObserverManager_Tests/Pods-ALObserverManager_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		D91BBB111BEF3F2800A6EDDB /* ALNewStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALNewStore.h; sourceTree = "<group>"; };
+		D91BBB121BEF3F2800A6EDDB /* ALNewStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALNewStore.m; sourceTree = "<group>"; };
+		D91BBB141BEF407F00A6EDDB /* ALNewStoreDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALNewStoreDelegate.h; sourceTree = "<group>"; };
 		D95623401BEC6AC20036828D /* ALDataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALDataStore.h; sourceTree = "<group>"; };
 		D95623411BEC6AC20036828D /* ALDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALDataStore.m; sourceTree = "<group>"; };
 		FA29A6DF3E18B13EFA90B5B1 /* Pods-ALObserverManager_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ALObserverManager_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-ALObserverManager_Example/Pods-ALObserverManager_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -140,6 +144,9 @@
 				6003F5A6195388D20070C39A /* ALViewController.m */,
 				D95623401BEC6AC20036828D /* ALDataStore.h */,
 				D95623411BEC6AC20036828D /* ALDataStore.m */,
+				D91BBB111BEF3F2800A6EDDB /* ALNewStore.h */,
+				D91BBB121BEF3F2800A6EDDB /* ALNewStore.m */,
+				D91BBB141BEF407F00A6EDDB /* ALNewStoreDelegate.h */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
 			);
@@ -397,6 +404,7 @@
 			files = (
 				D95623421BEC6AC20036828D /* ALDataStore.m in Sources */,
 				6003F59E195388D20070C39A /* ALAppDelegate.m in Sources */,
+				D91BBB131BEF3F2800A6EDDB /* ALNewStore.m in Sources */,
 				6003F5A7195388D20070C39A /* ALViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 			);

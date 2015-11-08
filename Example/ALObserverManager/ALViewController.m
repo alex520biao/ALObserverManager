@@ -8,8 +8,10 @@
 
 #import "ALViewController.h"
 #import "ALDataStore.h"
+#import "ALNewStore.h"
+#import "ALNewStoreDelegate.h"
 
-@interface ALViewController ()
+@interface ALViewController ()<ALNewStoreDelegate>
 
 
 @end
@@ -38,14 +40,30 @@
 
     
     //发送ALDataStoreMsgType类型测试消息
-    [[ALDataStore sharedInstance] sendMessage:@"你有新的A消息！！！" type:ALDataStoreMsgType_A];
-    [[ALDataStore sharedInstance] sendMessage:@"你有新的B消息！！！" type:ALDataStoreMsgType_B];
+    [[ALDataStore sharedInstance] testMessageType_A];
+    [[ALDataStore sharedInstance] testMessageType_B];
+    
+    [[ALNewStore sharedInstance] addObserver:self
+                                        type:ALNewStoreMsgType_A];
+    
+    [[ALNewStore sharedInstance] testMessageType_A];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - ALNewStoreDelegate
+/*!
+ *  @brief  ALNewStore发送消息协议
+ *
+ *  @param sender ALNewStore
+ *  @param msg    消息体
+ */
+-(void)store:(ALNewStore*)sender newStore:(NSString *)msg{
+
 }
 
 @end

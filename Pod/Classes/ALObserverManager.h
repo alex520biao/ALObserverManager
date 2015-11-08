@@ -19,7 +19,7 @@
 /*!
  *  @brief  通过distributeIdentifier发送消息,所有注册过distributeIdentifier的监听者都会收到消息
  */
-- (void)sendMessage:(id)msg distribute:(NSString*)distributeIdentifier;
+- (void)sendMessage:(id)msg sender:(id)sender distribute:(NSString*)distributeIdentifier;
 
 #pragma mark - observer
 /*!
@@ -33,6 +33,17 @@
 - (void)addObserver:(id)observer
          distribute:(NSString*)distributeIdentifier
       responseBlock:(ALObserverDistributeBlock)responseBlock;
+
+/*!
+ *  @brief  监听distributeIdentifier标识的消息
+ *
+ *  @param observer             监听者
+ *  @param distributeIdentifier 消息标识符
+ *  @param sel                  消息分发方法observer的SEL必须是两位参数,格式如(xxxx:sender xxxx:msg)
+ */
+- (void)addObserver:(id)observer
+         distribute:(NSString*)distributeIdentifier
+           selector:(NSString*)selStr;
 
 /*!
  *  @brief  移除监听者所属的所有监听item

@@ -20,20 +20,24 @@ typedef  void(^ALObserverDistributeBlock)(id msg,NSString *distributeIdentifier)
 @interface ALObserverItem : NSObject
 
 /*!
+ *  @brief 监听者对象
+ */
+@property (nonatomic, weak) id observer;
+
+/*!
  *  @brief  消息分发唯一标识符
  */
 @property (nonatomic, copy) NSString *distributeIdentifier;
-
-
-/*!
- *  @brief  observer的地址
- */
-@property (nonatomic, copy) NSString *observerAddress;
 
 /*!
  *  @brief  数据变化时事件变化block
  */
 @property (nonatomic, copy) ALObserverDistributeBlock block;
+
+/*!
+ *  @brief 消息发送的方法: SEL结构体的字符串
+ */
+@property (nonatomic, copy) NSString *selStr;
 
 
 @end

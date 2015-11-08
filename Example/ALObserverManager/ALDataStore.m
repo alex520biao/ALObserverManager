@@ -67,7 +67,7 @@
         return;
     }
 
-    [self.observerManager sendMessage:msg distribute:distributeIdentifier];
+    [self.observerManager sendMessage:msg sender:self distribute:distributeIdentifier];
 }
 
 
@@ -81,6 +81,19 @@
         distributeIdentifier = @"ALDataStoreMsgType_C";
     }
     return distributeIdentifier;
+}
+
+#pragma mark - test
+-(void)testMessageType_A{
+    [self sendMessage:@"你有新的A消息！！！" type:ALDataStoreMsgType_A];
+}
+
+-(void)testMessageType_B{
+    [self sendMessage:@"你有新的B消息！！！" type:ALDataStoreMsgType_B];
+}
+
+-(void)testMessageType_C{
+    [self sendMessage:@"你有新的C消息！！！" type:ALDataStoreMsgType_C];
 }
 
 @end

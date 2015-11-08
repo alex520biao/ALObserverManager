@@ -28,12 +28,24 @@
 /*!
  *  @brief  通过distributeIdentifier发送消息,所有注册过distributeIdentifier的监听者都会收到消息
  */
-- (void)sendMessage:(id)msg distribute:(NSString*)distributeIdentifier{
+- (void)sendMessage:(id)msg sender:(id)sender distribute:(NSString*)distributeIdentifier{
     [self.observerItemDict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL * stop) {
         NSDictionary *dict = obj;
         ALObserverItem *item = (ALObserverItem*)[dict objectForKey:distributeIdentifier];
         if (item && item.block) {
             item.block(msg,item.distributeIdentifier);
+        }
+        
+        if(item && item.selStr){
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+            //NSString -- > SEL
+            NSString *selStr = item.selStr;
+            SEL sel = NSSelectorFromString(selStr);
+            if ([item.observer respondsToSelector:sel]) {
+                [item.observer performSelector:sel withObject:sender withObject:msg];
+            }
+#pragma clang diagnostic pop
         }
     }];
 }
@@ -44,13 +56,39 @@
       responseBlock:(ALObserverDistributeBlock)responseBlock{
 
     //add observer
-    NSString *observerAddress = [NSString stringWithFormat:@"%p",observer];
-    [self addObserverWithAddress:observerAddress
-                      distribute:distributeIdentifier
-                   responseBlock:responseBlock];
+    [self addObserver:observer
+           distribute:distributeIdentifier
+        responseBlock:responseBlock
+             selector:nil];
     
     //remove observer when observer dealloc
     __weak typeof(self) weakSelf = self;
+    NSString *observerAddress = [NSString stringWithFormat:@"%p",observer];
+    [[observer rac_willDeallocSignal]subscribeCompleted:^{
+        [weakSelf removeObserverWithAddress:observerAddress];
+    }];
+}
+
+/*!
+ *  @brief  监听distributeIdentifier标识的消息
+ *
+ *  @param observer             监听者
+ *  @param distributeIdentifier 消息标识符
+ *  @param sel                  消息分发方法observer的SEL
+ */
+- (void)addObserver:(id)observer
+         distribute:(NSString*)distributeIdentifier
+           selector:(NSString*)selStr{
+
+    //add observer
+    [self addObserver:observer
+           distribute:distributeIdentifier
+        responseBlock:nil
+             selector:selStr];
+    
+    //remove observer when observer dealloc
+    __weak typeof(self) weakSelf = self;
+    NSString *observerAddress = [NSString stringWithFormat:@"%p",observer];
     [[observer rac_willDeallocSignal]subscribeCompleted:^{
         [weakSelf removeObserverWithAddress:observerAddress];
     }];
@@ -72,22 +110,25 @@
 
 
 #pragma mark - internal method
-- (void)addObserverWithAddress:(NSString *)observer_address
-                    distribute:(NSString*)distributeIdentifier
-                 responseBlock:(ALObserverDistributeBlock)responseBlock {
-    if (observer_address && observer_address && responseBlock) {
+- (void)addObserver:(id)observer
+         distribute:(NSString*)distributeIdentifier
+      responseBlock:(ALObserverDistributeBlock)responseBlock
+           selector:(NSString*)selStr{
+    NSString *observerAddress = [NSString stringWithFormat:@"%p",observer];
+    if (observerAddress && distributeIdentifier) {
         ALObserverItem *item = [[ALObserverItem alloc] init];
+        item.observer             = observer;
         item.distributeIdentifier = distributeIdentifier;
-        item.observerAddress      = observer_address;
         item.block                = responseBlock;
+        item.selStr               = selStr;
         
         //以observerAddress为key,不存在则添加,存在则更新
-        if(item && item.observerAddress){
+        if(item && observerAddress){
             //获取distributeIdentifier对应的项目
-            NSMutableDictionary *observerDict = [self.observerItemDict objectForKey:item.observerAddress];
+            NSMutableDictionary *observerDict = [self.observerItemDict objectForKey:observerAddress];
             if (!observerDict) {
-                [self.observerItemDict setObject:[NSMutableDictionary dictionary] forKey:item.observerAddress];
-                observerDict = [self.observerItemDict objectForKey:item.observerAddress];
+                [self.observerItemDict setObject:[NSMutableDictionary dictionary] forKey:observerAddress];
+                observerDict = [self.observerItemDict objectForKey:observerAddress];
             }
             
             //存放数据
