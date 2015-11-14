@@ -9,6 +9,7 @@
 #import "ALObserverManager.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import "ALObserverItem.h"
+#import "ALObserverMsg.h"
 
 @interface ALObserverManager()
 
@@ -28,13 +29,16 @@
 /*!
  *  @brief  通过distributeIdentifier发送消息,所有注册过distributeIdentifier的监听者都会收到消息
  */
-- (void)sendMessage:(id)msg sender:(id)sender distribute:(NSString*)distributeIdentifier{
+- (void)sendMessage:(id)payload sender:(id)sender distribute:(NSString*)distributeIdentifier{
     [self.observerItemDict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL * stop) {
         NSDictionary *dict = obj;
         ALObserverItem *item = (ALObserverItem*)[dict objectForKey:distributeIdentifier];
+        ALObserverMsg *message = [[ALObserverMsg alloc] init];
+        message.payload = payload;
+        message.distributeIdentifier = distributeIdentifier;
         //使用block回调
         if (item && item.block) {
-            item.block(sender,msg);
+            item.block(sender,message);
         }
         
         //使用SEL回调
@@ -45,7 +49,7 @@
             NSString *selStr = item.selStr;
             SEL sel = NSSelectorFromString(selStr);
             if ([item.observer respondsToSelector:sel]) {
-                [item.observer performSelector:sel withObject:sender withObject:msg];
+                [item.observer performSelector:sel withObject:sender withObject:message];
             }
 #pragma clang diagnostic pop
         }

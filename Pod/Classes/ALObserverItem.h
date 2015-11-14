@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+
+@class ALObserverMsg;
 /*!
  *  @brief  数据变化回调blcok
  *
@@ -15,7 +17,7 @@
  *
  *  @return
  */
-typedef  void(^ALObserverDistributeBlock)(id sender,id msg);
+typedef  void(^ALObserverDistributeBlock)(id sender,ALObserverMsg *msg);
 
 @interface ALObserverItem : NSObject
 

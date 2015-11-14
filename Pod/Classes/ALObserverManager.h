@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ALObserverItem.h"
+#import "ALObserverMsg.h"
 
 /*!
  *  @brief  监听分发管理器
