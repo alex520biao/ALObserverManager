@@ -27,6 +27,10 @@ typedef NS_ENUM(NSInteger, ALDataStoreMsgType) {
     ALDataStoreMsgType_C
 };
 
+@class ALDataStore;
+
+typedef  void(^ALDataStoreDistributeBlock)(ALDataStore *sender,NSString *msg,NSDictionary *userInfo);
+
 /*!
  *  @brief  数据管理者: 管理数据变化并将数据变化消息发送给所有的监听者
  */
@@ -43,9 +47,9 @@ typedef NS_ENUM(NSInteger, ALDataStoreMsgType) {
  */
 - (void)addObserver:(id)observer
                type:(ALDataStoreMsgType)type
-      responseBlock:(ALObserverDistributeBlock)responseBlock;
+      responseBlock:(ALDataStoreDistributeBlock)responseBlock;
 
-- (void)sendMessage:(id)msg type:(ALDataStoreMsgType)type;
+- (void)sendMessage:(NSString*)msg type:(ALDataStoreMsgType)type;
 
 #pragma mark - test
 -(void)testMessageType_A;

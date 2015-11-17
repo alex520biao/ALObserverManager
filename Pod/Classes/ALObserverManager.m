@@ -29,16 +29,18 @@
 /*!
  *  @brief  通过distributeIdentifier发送消息,所有注册过distributeIdentifier的监听者都会收到消息
  */
-- (void)sendMessage:(id)payload sender:(id)sender distribute:(NSString*)distributeIdentifier{
+- (void)postMessage:(id)msg sender:(id)sender distribute:(NSString*)distributeIdentifier{
     [self.observerItemDict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL * stop) {
         NSDictionary *dict = obj;
         ALObserverItem *item = (ALObserverItem*)[dict objectForKey:distributeIdentifier];
         ALObserverMsg *message = [[ALObserverMsg alloc] init];
-        message.payload = payload;
+        message.sender  = sender;
+        message.payload = msg;
         message.distributeIdentifier = distributeIdentifier;
+        message.userInfo = item.userInfo;
         //使用block回调
         if (item && item.block) {
-            item.block(sender,message);
+            item.block(message.sender,message);
         }
         
         //使用SEL回调
@@ -49,7 +51,7 @@
             NSString *selStr = item.selStr;
             SEL sel = NSSelectorFromString(selStr);
             if ([item.observer respondsToSelector:sel]) {
-                [item.observer performSelector:sel withObject:sender withObject:message];
+                [item.observer performSelector:sel withObject:message];
             }
 #pragma clang diagnostic pop
         }
@@ -59,11 +61,13 @@
 #pragma mark - observer
 - (void)addObserver:(id)observer
          distribute:(NSString*)distributeIdentifier
+           userInfo:(NSDictionary *)userInfo
       responseBlock:(ALObserverDistributeBlock)responseBlock{
 
     //add observer
     [self addObserver:observer
            distribute:distributeIdentifier
+             userInfo:userInfo
         responseBlock:responseBlock
              selector:nil];
     
@@ -80,15 +84,19 @@
  *
  *  @param observer             监听者
  *  @param distributeIdentifier 消息标识符
+ *  @param userInfo 注册时保留的用户自定义数据
  *  @param sel                  消息分发方法observer的SEL
  */
 - (void)addObserver:(id)observer
          distribute:(NSString*)distributeIdentifier
-           selector:(NSString*)selStr{
+           userInfo:(NSDictionary *)userInfo
+           selector:(SEL)sel{
 
+    NSString *selStr = NSStringFromSelector(sel);
     //add observer
     [self addObserver:observer
            distribute:distributeIdentifier
+             userInfo:userInfo
         responseBlock:nil
              selector:selStr];
     
@@ -114,10 +122,18 @@
     }
 }
 
+- (void)removeObserver:(id)observer distribute:(NSString*)distributeIdentifier{
+    NSString *observerAddress = [NSString stringWithFormat:@"%p",observer];
+    if (observerAddress && distributeIdentifier) {
+        NSMutableDictionary *observerDict = [self.observerItemDict objectForKey:observerAddress];
+        [observerDict removeObjectForKey:distributeIdentifier];
+    }
+}
 
 #pragma mark - internal method
 - (void)addObserver:(id)observer
          distribute:(NSString*)distributeIdentifier
+           userInfo:(NSDictionary *)userInfo
       responseBlock:(ALObserverDistributeBlock)responseBlock
            selector:(NSString*)selStr{
     NSString *observerAddress = [NSString stringWithFormat:@"%p",observer];
@@ -125,6 +141,7 @@
         ALObserverItem *item = [[ALObserverItem alloc] init];
         item.observer             = observer;
         item.distributeIdentifier = distributeIdentifier;
+        item.userInfo             = userInfo;
         item.block                = responseBlock;
         item.selStr               = selStr;
         

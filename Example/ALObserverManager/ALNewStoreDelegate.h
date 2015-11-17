@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <ALObserverManager/ALObserverManager.h>
 
 @class ALNewStore;
 @protocol ALNewStoreDelegate <NSObject>
@@ -14,9 +15,8 @@
 /*!
  *  @brief  ALNewStore发送消息协议
  *
- *  @param sender ALNewStore
  *  @param msg    消息体
  */
--(void)store:(ALNewStore*)sender newStore:(NSString *)msg;
+-(void)newStore:(ALObserverMsg *)msg;
 
 @end

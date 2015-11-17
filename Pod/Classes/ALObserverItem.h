@@ -41,5 +41,10 @@ typedef  void(^ALObserverDistributeBlock)(id sender,ALObserverMsg *msg);
  */
 @property (nonatomic, copy) NSString *selStr;
 
+/*!
+ *  @brief  用户自定义数据: NSDictionary中只能是简单数据类型或者实现了<copy>协议的自定义类型
+ */
+@property (nonatomic, copy) NSDictionary *userInfo;
+
 
 @end

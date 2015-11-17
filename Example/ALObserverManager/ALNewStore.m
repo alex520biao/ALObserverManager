@@ -53,10 +53,10 @@
         return;
     }
     
-    NSString *str = NSStringFromSelector(@selector(store:newStore:));
     [self.observerManager addObserver:observer
                            distribute:distributeIdentifier
-                             selector:str];
+                             userInfo:nil
+                             selector:@selector(newStore:)];
 }
 
 - (void)sendMessage:(id)msg type:(ALNewStoreMsgType)type{
@@ -65,7 +65,7 @@
         return;
     }
     
-    [self.observerManager sendMessage:msg sender:self distribute:distributeIdentifier];
+    [self.observerManager postMessage:msg sender:self distribute:distributeIdentifier];
 }
 
 

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <ALObserverManager/ALObserverManager.h>
 #import "ALNewStoreDelegate.h"
+#import <ALObserverManager/ALObserverManager.h>
 
 /*!
  *  @brief ALDataStore定义的消息类型

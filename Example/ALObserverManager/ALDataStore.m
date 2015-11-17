@@ -49,25 +49,31 @@
  */
 - (void)addObserver:(id)observer
                type:(ALDataStoreMsgType)type
-      responseBlock:(ALObserverDistributeBlock)responseBlock{
+      responseBlock:(ALDataStoreDistributeBlock)responseBlock{
 
     NSString * distributeIdentifier = [ALDataStore distributeIdentifierWithType:type];
     if(!distributeIdentifier){
         return;
     }
     
+    NSDictionary *dict = [NSDictionary dictionaryWithObject:@"userValue" forKey:@"userKey"];
     [self.observerManager addObserver:observer
                            distribute:distributeIdentifier
-                        responseBlock:responseBlock];
+                             userInfo:dict
+                        responseBlock:^(id sender, ALObserverMsg *msg) {
+                            if (responseBlock) {
+                                responseBlock(sender,msg.payload,msg.userInfo);
+                            }
+                        }];
 }
 
-- (void)sendMessage:(id)msg type:(ALDataStoreMsgType)type{
+- (void)sendMessage:(NSString*)msg type:(ALDataStoreMsgType)type{
     NSString * distributeIdentifier = [ALDataStore distributeIdentifierWithType:type];
     if(!distributeIdentifier){
         return;
     }
 
-    [self.observerManager sendMessage:msg sender:self distribute:distributeIdentifier];
+    [self.observerManager postMessage:msg sender:self distribute:distributeIdentifier];
 }
 
 

@@ -13,12 +13,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {    
-    //ALAppDelegate向ALDataStore注册监听消息
+    //ALAppDelegate向ALDataStore注册监听消息    
     [[ALDataStore sharedInstance] addObserver:self
                                          type:ALDataStoreMsgType_A
-                                responseBlock:^(id sender,ALObserverMsg *msg) {
-                                    NSString *message = (NSString*)msg.payload;
-                                    NSLog(@"接收消息: %@",message);
+                                responseBlock:^(ALDataStore *sender, NSString *msg, NSDictionary *userInfo) {
+                                    NSLog(@"接收消息: %@",msg);
                                 }];
 
     return YES;
