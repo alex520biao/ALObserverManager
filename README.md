@@ -2,10 +2,26 @@
 
 ## 功能简介
 
-1. 支持消息标识符订阅-发布
-2. 支持使用delegate一对多消息分发
-3. 支持使用block一对多消息分发
-4. 监听自释放
+1. 消息标识符实现Observer Pattern(订阅-发布模式),
+	
+	>类似于NSNotificationCenter一样的一对多订阅-发布模式消息分发
+
+2. (全局/私有)一对多消息分发
+	
+	>NSNotificationCenter是全局的,任何类都可以监听消息。
+	ALObserverManager需要依附某个类的存在,并且监听消息也仅限于此类的范围。
+	
+3. 支持delegate和block两种消息分发方式
+	
+	>使用方式与普通delegae、block相同
+	
+4. 对监听者弱引用,监听自释放
+	
+	>监听者释放时,监听会会被自动删除。
+	
+5. 避免监听者重复监听
+	
+	>同一监听者多次监听同一消息,NSNotificationCenter会有重复监听的问题; ALObserverManager不会产生重复监听。
 
 ## 使用方法&Demo
 ### demo code
