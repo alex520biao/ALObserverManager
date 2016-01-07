@@ -2,7 +2,7 @@
 //  ALNewStoreDelegate.h
 //  ALObserverManager
 //
-//  Created by liubiao on 15/11/8.
+//  Created by alex520biao on 15/11/8.
 //  Copyright © 2015年 alex520biao. All rights reserved.
 //
 

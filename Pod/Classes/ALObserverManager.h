@@ -2,7 +2,7 @@
 //  ALObserverManager.h
 //  Pods
 //
-//  Created by liubiao on 15/11/2.
+//  Created by alex520biao on 15/11/2.
 //
 //
 
@@ -20,8 +20,11 @@
 
 /*!
  *  @brief  通过distributeIdentifier发送消息,所有注册过distributeIdentifier的监听者都会收到消息
+ *  palyload即为ALObserverMsg的palyload
  */
-- (void)postMessage:(id)msg sender:(id)sender distribute:(NSString*)distributeIdentifier;
+- (void)postMessage:(id)palyload
+             sender:(id)sender
+         distribute:(NSString*)distributeIdentifier;
 
 #pragma mark - observer
 /*!

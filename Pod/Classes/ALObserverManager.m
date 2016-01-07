@@ -2,7 +2,7 @@
 //  ALObserverManager.m
 //  Pods
 //
-//  Created by liubiao on 15/11/2.
+//  Created by alex520biao on 15/11/2.
 //
 //
 
@@ -28,14 +28,18 @@
 
 /*!
  *  @brief  通过distributeIdentifier发送消息,所有注册过distributeIdentifier的监听者都会收到消息
+ *  palyload即为ALObserverMsg的palyload
  */
-- (void)postMessage:(id)msg sender:(id)sender distribute:(NSString*)distributeIdentifier{
+- (void)postMessage:(id)palyload
+             sender:(id)sender
+         distribute:(NSString*)distributeIdentifier{
+    
     [self.observerItemDict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL * stop) {
         NSDictionary *dict = obj;
         ALObserverItem *item = (ALObserverItem*)[dict objectForKey:distributeIdentifier];
         ALObserverMsg *message = [[ALObserverMsg alloc] init];
         message.sender  = sender;
-        message.payload = msg;
+        message.payload = palyload;
         message.distributeIdentifier = distributeIdentifier;
         message.userInfo = item.userInfo;
         //使用block回调
